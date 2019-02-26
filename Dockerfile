@@ -1,6 +1,7 @@
-FROM alpine:3.8
-RUN apk update && apk add nodejs
-ENV PORT=80
-EXPOSE $PORT
-COPY app.js /app/
-CMD ["node", "/app/app.js"]
+FROM node:8
+WORKDIR /usr/src/app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 80
+CMD ["npm", "start"]
