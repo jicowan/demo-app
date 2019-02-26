@@ -21,7 +21,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - sed -i 's/<IMAGE1_NAME>/\$REPOSITORY_URI:\$IMAGE_TAG/g' taskdef.json
+      - export IMAGE_NAME=$REPOSITORY_URI:$IMAGE_TAG 
+      - sed -i "s/IMAGE_NAME/$IMAGE_NAME/g" taskdef.json
 artifacts:
   files:
     - taskdef.json
