@@ -10,7 +10,13 @@ Resources:
 # Optional properties
         PlatformVersion: "LATEST"
         NetworkConfiguration:
-          awsvpcConfiguration:
-            subnets: ["subnet-00efac43c40e9a222","subnet-029b0d7bb6bd80212"]
-              securityGroups: "sg-0cb9d06458a4bc300"
-              assignPublicIp: "ENABLED"
+          AwsvpcConfiguration:
+            Subnets: ["subnet-00efac43c40e9a222","subnet-029b0d7bb6bd80212","subnet-042c94ea7a6cdfe1c"]
+            SecurityGroups: ["sg-0cb9d06458a4bc300"]
+            AssignPublicIp: "ENABLED"
+Hooks:
+  - BeforeInstall: "LambdaFunctionToValidateBeforeInstall"
+  - AfterInstall: "LambdaFunctionToValidateAfterTraffic"
+  - AfterAllowTestTraffic: "LambdaFunctionToValidateAfterTestTrafficStarts"
+  - BeforeAllowTraffic: "LambdaFunctionToValidateBeforeAllowingProductionTraffic"
+  - AfterAllowTraffic: "LambdaFunctionToValidateAfterAllowingProductionTraffic"
